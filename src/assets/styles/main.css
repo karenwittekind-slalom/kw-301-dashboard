@@ -1,0 +1,127 @@
+:root {
+    color-scheme: light;
+    font-family: "Avenir Next", "Segoe UI", sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    --ops-page: #f2f6f5;
+    --ops-ink: #163b4a;
+    --ops-muted: #647580;
+    --ops-teal: #087f83;
+    --ops-teal-soft: #e5f2f0;
+    --ops-border: #dce5e5;
+    --ops-border-strong: #b8c9cb;
+    --ops-green: #3f8060;
+    --ops-green-ink: #2e6a4c;
+    --ops-green-soft: #e9f4ed;
+    --ops-amber: #d9913c;
+    --ops-amber-ink: #8a5716;
+    --ops-amber-soft: #fbf1df;
+    --ops-red: #bf4d48;
+    --ops-red-ink: #963b38;
+    --ops-red-soft: #f9e9e7;
+}
+
+html {
+    min-width: 320px;
+    background: var(--ops-page);
+}
+
+body {
+    min-width: 320px;
+    margin: 0;
+    color: var(--ops-ink);
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+*:focus-visible {
+    outline: 3px solid #126e73;
+    outline-offset: 3px;
+}
+
+.v-application {
+    background: var(--ops-page);
+    color: var(--ops-ink);
+}
+
+.v-main {
+    background: var(--ops-page);
+}
+
+.skip-link {
+    position: absolute;
+    z-index: 2000;
+    top: 8px;
+    left: 8px;
+    padding: 9px 12px;
+    transform: translateY(-160%);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--ops-ink);
+    box-shadow: 0 2px 10px rgb(17 49 61 / 16%);
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+.dashboard-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 1680px;
+    gap: 25px;
+    padding: 24px clamp(16px, 3.4vw, 52px) 34px;
+}
+
+.dashboard-shell>* {
+    min-width: 0;
+}
+
+.dashboard-disclaimer {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 13px 15px;
+    border-top: 1px solid var(--ops-border);
+    color: var(--ops-muted);
+}
+
+.dashboard-disclaimer .v-icon {
+    flex: 0 0 auto;
+    color: var(--ops-teal);
+    font-size: 18px;
+}
+
+.dashboard-disclaimer p {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+::selection {
+    background: #c9e3e0;
+    color: var(--ops-ink);
+}
+
+@media (max-width: 600px) {
+    .dashboard-shell {
+        gap: 21px;
+        padding-top: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto;
+        animation-duration: 0.01ms;
+        animation-iteration-count: 1;
+        transition-duration: 0.01ms;
+    }
+}
