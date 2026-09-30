@@ -34,7 +34,7 @@
       </v-table>
     </div>
     <div class="mobile-units">
-      <v-card v-for="unit in sortedUnits" :key="unit.id" class="unit-card" variant="outlined">
+      <v-card v-for="unit in sortedUnits" :key="unit.id" class="unit-card" color="surface" variant="flat" border>
         <div class="unit-card-heading"><h3>{{ unit.name }}</h3><span class="status-pill" :class="`status-${unit.status}`"><span class="status-marker" aria-hidden="true" />{{ statusLabel(unit.status) }}</span></div>
         <dl>
           <div><dt>Patients</dt><dd>{{ formatNumber(unit.patientVolume) }}</dd></div>
@@ -80,34 +80,3 @@ function sortIcon(key: SortKey) {
 }
 </script>
 
-<style scoped>
-.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin: 0 0 12px; }
-.section-heading h2 { margin: 0; color: var(--ops-ink); font-size: 18px; }
-.section-heading > p { margin: 0; color: var(--ops-muted); font-size: 12px; }
-.section-kicker { margin: 0 0 4px; color: var(--ops-teal); font-size: 10px; font-weight: 700; text-transform: uppercase; }
-.desktop-table { overflow-x: auto; border: 1px solid var(--ops-border); border-radius: 9px; background: #fff; }
-.unit-table :deep(table) { min-width: 820px; }
-.unit-table :deep(th), .unit-table :deep(td) { white-space: nowrap; }
-.unit-table :deep(thead) { background: #f3f7f7; }
-.unit-table :deep(th) { color: var(--ops-muted); font-size: 11px; font-weight: 700; }
-.unit-table :deep(td) { color: var(--ops-ink); font-size: 12px; }
-.sort-button { min-width: 0; padding: 0 4px; color: var(--ops-muted); font-size: 11px; font-weight: 700; }
-.sort-button :deep(.v-icon) { font-size: 14px; }
-.unit-name { color: var(--ops-ink) !important; font-weight: 650 !important; }
-.status-pill { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 4px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
-.status-normal { background: var(--ops-green-soft); color: var(--ops-green-ink); }
-.status-watch { background: var(--ops-amber-soft); color: var(--ops-amber-ink); }
-.status-critical { background: var(--ops-red-soft); color: var(--ops-red-ink); }
-.status-marker { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-.mobile-units { display: none; }
-dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; margin: 13px 0 0; }
-dl div { display: flex; justify-content: space-between; gap: 8px; }
-dt { color: var(--ops-muted); font-size: 11px; }
-dd { margin: 0; color: var(--ops-ink); font-size: 11px; font-weight: 650; text-align: right; }
-.unit-card { padding: 14px; border-color: var(--ops-border); border-radius: 8px; }
-.unit-card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-.unit-card-heading h3 { margin: 0; color: var(--ops-ink); font-size: 13px; }
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
-@media (max-width: 760px) { .desktop-table { display: none; } .mobile-units { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
-@media (max-width: 540px) { .mobile-units { grid-template-columns: 1fr; } .section-heading { align-items: flex-start; flex-direction: column; } }
-</style>

@@ -1,10 +1,10 @@
 <template>
-  <DashboardHeader v-model="selectedMonth" :month-options="monthOptions" />
+  <DashboardHeader v-model="selectedMonth" :month-options="monthOptions" :is-dark="isDarkTheme" @toggle-theme="toggleTheme" />
   <v-main id="main-content">
     <v-container class="dashboard-shell" fluid>
       <DashboardEmptyState v-if="months.length === 0" />
       <template v-else>
-        <DashboardSummary :summary="summary" :period-label="periodLabel" />
+        <DashboardSummary :summary="summary" :period-label="periodLabel" :alert-count="filteredAlerts.length" />
         <MetricsGrid :metrics="metricCards" />
         <CapacitySection :months="months" :selected-index="selectedIndex" />
         <WaitTimesSection :months="months" :units="unitSnapshot" :selected-index="selectedIndex" :period-label="periodLabel" />
@@ -22,6 +22,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useTheme } from 'vuetify'
 import DashboardHeader from '@/components/dashboard/DashboardHeader.vue'
 import DashboardSummary from '@/components/dashboard/DashboardSummary.vue'
 import MetricsGrid from '@/components/dashboard/MetricsGrid.vue'
@@ -44,5 +45,11 @@ const {
   summary,
   averageNurseRatio,
 } = useDashboardMetrics()
+const theme = useTheme()
+const isDarkTheme = computed(() => theme.global.name.value === 'clinicalDark')
 const periodLabel = computed(() => selectedMonth.value ?? '2025 annual summary')
+
+function toggleTheme() {
+  theme.change(isDarkTheme.value ? 'clinicalLight' : 'clinicalDark')
+}
 </script>

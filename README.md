@@ -8,7 +8,7 @@ A responsive, single-page dashboard prototype for a Clinical Operations Lead rev
 
 **Problem:** Identify emerging system-wide and unit-level capacity or staffing pressure quickly, without reviewing a spreadsheet.
 
-**MVP features:** Twelve-month filtering; five operational KPIs; monthly patient-volume, flow, occupancy, and wait-time charts; unit wait and staffing comparisons; sortable unit status; prioritized alerts; deterministic operational summary; accessible mobile layouts.
+**MVP features:** Twelve-month filtering; five operational KPIs; monthly patient-volume, flow, occupancy, and wait-time charts; unit wait and staffing comparisons; sortable unit status; prioritized alerts; deterministic operational summary; compact light/dark theme switch; accessible mobile layouts.
 
 ## Technology
 

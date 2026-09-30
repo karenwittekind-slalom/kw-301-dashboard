@@ -18,10 +18,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useTheme } from 'vuetify'
 import type { ChartData } from 'chart.js'
 import type { MonthlyClinicalOperations, UnitOperations } from '@/types/dashboard'
 import { getWaitStatus } from '@/utils/dashboardCalculations'
-import { createBarChartOptions, createLineChartOptions } from '@/utils/chartConfig'
+import { createBarChartOptions, createLineChartOptions, darkChartPalette, lightChartPalette } from '@/utils/chartConfig'
 import ChartCard from './ChartCard.vue'
 
 const props = defineProps<{
@@ -30,30 +31,25 @@ const props = defineProps<{
   selectedIndex: number
   periodLabel: string
 }>()
+const theme = useTheme()
+const chartPalette = computed(() => theme.global.current.value.dark ? darkChartPalette : lightChartPalette)
 const highestWait = computed(() => [...props.units].sort((first, second) => second.averageWaitTimeMinutes - first.averageWaitTimeMinutes)[0])
 const waitSummary = computed(() => `Average wait ranges from ${Math.min(...props.months.map(month => month.averageWaitTimeMinutes))} to ${Math.max(...props.months.map(month => month.averageWaitTimeMinutes))} minutes; ${props.periodLabel} is ${props.selectedIndex >= 0 ? props.months[props.selectedIndex]?.averageWaitTimeMinutes : 'shown in the monthly trend'} minutes.`)
 const unitSummary = computed(() => `The Emergency Department has the highest average wait at ${highestWait.value?.averageWaitTimeMinutes ?? 0} minutes.`)
 const trendData = computed<ChartData<'line'>>(() => ({
   labels: props.months.map(month => month.monthShort),
-  datasets: [{ label: 'Average wait', data: props.months.map(month => month.averageWaitTimeMinutes), borderColor: '#087f83', backgroundColor: '#087f83', pointRadius: props.months.map((_, index) => index === props.selectedIndex ? 5 : 2), tension: 0.32 }],
+  datasets: [{ label: 'Average wait', data: props.months.map(month => month.averageWaitTimeMinutes), borderColor: chartPalette.value.teal, backgroundColor: chartPalette.value.teal, pointRadius: props.months.map((_, index) => index === props.selectedIndex ? 5 : 2), tension: 0.32 }],
 }))
 const unitData = computed<ChartData<'bar'>>(() => ({
   labels: props.units.map(unit => unit.shortName),
   datasets: [{
     label: 'Average wait (minutes)',
     data: props.units.map(unit => unit.averageWaitTimeMinutes),
-    backgroundColor: props.units.map(unit => getWaitStatus(unit.averageWaitTimeMinutes) === 'critical' ? '#bf4d48' : getWaitStatus(unit.averageWaitTimeMinutes) === 'watch' ? '#d9913c' : '#82b8b5'),
+    backgroundColor: props.units.map(unit => getWaitStatus(unit.averageWaitTimeMinutes) === 'critical' ? chartPalette.value.red : getWaitStatus(unit.averageWaitTimeMinutes) === 'watch' ? chartPalette.value.amber : chartPalette.value.green),
     borderRadius: 4,
   }],
 }))
-const trendOptions = createLineChartOptions('minutes')
-const unitOptions = createBarChartOptions('minutes')
+const trendOptions = computed(() => createLineChartOptions('minutes', undefined, chartPalette.value))
+const unitOptions = computed(() => createBarChartOptions('minutes', chartPalette.value))
 </script>
 
-<style scoped>
-.section-heading { margin: 0 0 12px; }
-.section-heading h2 { margin: 0; color: var(--ops-ink); font-size: 18px; }
-.section-kicker { margin: 0 0 4px; color: var(--ops-teal); font-size: 10px; font-weight: 700; text-transform: uppercase; }
-.wait-callout { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; padding: 11px 14px; border: 1px solid #efd8b6; border-radius: 8px; background: var(--ops-amber-soft); color: var(--ops-amber-ink); font-size: 12px; line-height: 1.45; }
-.wait-callout :deep(.v-icon) { flex: 0 0 auto; }
-</style>

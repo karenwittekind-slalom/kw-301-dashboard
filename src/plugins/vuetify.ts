@@ -24,6 +24,15 @@ export default createVuetify({
           background: '#f2f6f5',
         },
       },
+      clinicalDark: {
+        dark: true,
+        colors: {
+          primary: '#65c4bd',
+          secondary: '#b8d9dc',
+          surface: '#1b2a31',
+          background: '#111c21',
+        },
+      },
     },
   },
 })
